@@ -3,15 +3,25 @@ import '../App.css';
 import IngredientList from './IngredientList';
 
 class Recipe extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    this.props.hide(this.props.title);
+  }
+
+
   render() {
     return (
       <div>
-        <a className="recipe-link">
+        <a className="recipe-link" onClick={this.handleClick}>
           <div className="recipe-name">
-            <h1>Pumpkin Pie</h1>
+            <h1>{this.props.title}</h1>
           </div>
         </a>
-        <IngredientList shouldHide={false} />
+        <IngredientList hidden={this.props.hidden} ingredients={this.props.ingredients} />
       </div>
     );
   }
