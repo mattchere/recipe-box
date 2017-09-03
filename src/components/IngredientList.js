@@ -8,8 +8,8 @@ class IngredientList extends Component {
         <h1 className="ingredient-title">Ingredients</h1>
         <hr />
         <ul className="ingredient-list">
-          {this.props.ingredients.map(ing => {
-            return <li>{ing}</li>
+          {this.props.ingredients.map((ing, i) => {
+            return <li key={i}>{ing}</li>
           })}
         </ul>
         <button>Delete</button>
