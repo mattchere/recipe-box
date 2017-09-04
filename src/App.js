@@ -34,6 +34,7 @@ class App extends Component {
     this.addRecipe = this.addRecipe.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeIngredients = this.handleChangeIngredients.bind(this);
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   hideIngredients(title) {
@@ -96,10 +97,21 @@ class App extends Component {
     });
   }
 
+  deleteRecipe(title) {
+    const resultingRecipes = this.state.recipes.filter(rec => rec.title !== title);
+    this.setState({
+      recipes: resultingRecipes
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <RecipeList recipes={this.state.recipes} hide={this.hideIngredients} />
+        <RecipeList 
+          recipes={this.state.recipes} 
+          hide={this.hideIngredients} 
+          deleteRecipe={this.deleteRecipe}
+        />
         <button onClick={this.open}>Add Recipe</button>
 
         <Modal show={this.state.showModal} onHide={this.close}>

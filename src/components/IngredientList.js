@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import '../App.css';
 
 class IngredientList extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.deleteRecipe(this.props.title);
+  }
+
   render() {
     return (
       <div className={this.props.hidden ? 'hidden ingredient-container': 'ingredient-container'}>
@@ -12,7 +21,7 @@ class IngredientList extends Component {
             return <li key={i}>{ing}</li>
           })}
         </ul>
-        <button>Delete</button>
+        <button onClick={this.handleClick}>Delete</button>
         <button>Edit</button>
       </div>
     );

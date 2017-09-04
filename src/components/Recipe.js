@@ -21,7 +21,12 @@ class Recipe extends Component {
             <h1>{this.props.title}</h1>
           </div>
         </a>
-        <IngredientList hidden={this.props.hidden} ingredients={this.props.ingredients} />
+        <IngredientList 
+          hidden={this.props.hidden} 
+          ingredients={this.props.ingredients} 
+          title={this.props.title}
+          deleteRecipe={this.props.deleteRecipe}
+        />
       </div>
     );
   }
