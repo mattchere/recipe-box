@@ -26,15 +26,26 @@ class App extends Component {
       newRecipe: {
         name: "",
         ingredients: ""
+      },
+      editRecipe: {
+        originalTitle: "",
+        name: "",
+        ingredients: ""
       }
     }
     this.hideIngredients = this.hideIngredients.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
+    this.openAddModal = this.openAddModal.bind(this);
+    this.closeAddModal = this.closeAddModal.bind(this);
+    this.openEditModal = this.openEditModal.bind(this);
+    this.closeEditModal = this.closeEditModal.bind(this);
     this.addRecipe = this.addRecipe.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeIngredients = this.handleChangeIngredients.bind(this);
+    this.handleChangeEditName = this.handleChangeEditName.bind(this);
+    this.handleChangeEditIngredients = this.handleChangeEditIngredients.bind(this);
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.editRecipe = this.editRecipe.bind(this);
+    this.editModal = this.editModal.bind(this);
   }
 
   hideIngredients(title) {
@@ -55,12 +66,20 @@ class App extends Component {
     });
   }
 
-  open() {
-    this.setState({showModal: true});
+  openAddModal() {
+    this.setState({showAddModal: true});
   }
 
-  close() {
-    this.setState({showModal: false});
+  closeAddModal() {
+    this.setState({showAddModal: false});
+  }
+
+  openEditModal() {
+    this.setState({showEditModal: true});
+  }
+
+  closeEditModal() {
+    this.setState({showEditModal: false});
   }
 
   addRecipe() {
@@ -76,10 +95,11 @@ class App extends Component {
         ingredients: ""
       }
     });
-    this.close();
+    this.closeAddModal();
   }
 
   handleChangeName(e) {
+    e.preventDefault();
     this.setState({
       newRecipe: {
         name: e.target.value,
@@ -89,6 +109,7 @@ class App extends Component {
   }
 
   handleChangeIngredients(e) {
+    e.preventDefault();    
     this.setState({
       newRecipe: {
         name: this.state.newRecipe.name,
@@ -104,6 +125,61 @@ class App extends Component {
     });
   }
 
+  editRecipe() {
+    const recipe = {
+      title: this.state.editRecipe.name,
+      ingredients: this.state.editRecipe.ingredients.split(','),
+      hidden: true
+    }
+    const newRecipes = this.state.recipes.map(rec =>
+    rec.title === this.state.editRecipe.originalTitle ? recipe: rec);
+    console.log(newRecipes);
+    this.setState({
+      recipes: newRecipes,
+      editRecipe: {
+        originalTitle: "",
+        name: "",
+        ingredients: ""
+      }
+    });
+    this.closeEditModal();
+  }
+
+  editModal(title) {
+    const recipe = this.state.recipes.filter(rec => rec.title === title)[0];
+    console.log(recipe);
+    this.setState({
+      editRecipe: {
+        originalTitle: recipe.title,
+        name: recipe.title,
+        ingredients: recipe.ingredients.join()
+      }
+    })
+    this.openEditModal();
+  }
+
+  handleChangeEditName(e) {
+    e.preventDefault();    
+    this.setState({
+      editRecipe: {
+        originalTitle: this.state.editRecipe.originalTitle,
+        name: e.target.value,
+        ingredients: this.state.editRecipe.ingredients
+      }
+    });
+  }
+
+  handleChangeEditIngredients(e) {
+    e.preventDefault();    
+    this.setState({
+      editRecipe: {
+        originalTitle: this.state.editRecipe.originalTitle,
+        name: this.state.editRecipe.name,
+        ingredients: e.target.value
+      }
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -111,10 +187,11 @@ class App extends Component {
           recipes={this.state.recipes} 
           hide={this.hideIngredients} 
           deleteRecipe={this.deleteRecipe}
+          editModal={this.editModal}
         />
-        <button onClick={this.open}>Add Recipe</button>
+        <button onClick={this.openAddModal}>Add Recipe</button>
 
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal show={this.state.showAddModal} onHide={this.closeAddModal}>
           <Modal.Header closeButton>
             <Modal.Title>Add Recipe</Modal.Title>
           </Modal.Header>
@@ -140,9 +217,40 @@ class App extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button onClick={this.addRecipe}>Add Recipe</button>
-            <button onClick={this.close}>Close</button>
+            <button onClick={this.closeAddModal}>Close</button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={this.state.showEditModal} onHide={this.closeEditModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Recipe</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              <FormGroup controlId="recipeForm">
+                <ControlLabel>Recipe</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.editRecipe.name}
+                  placeholder="Recipe Name"
+                  onChange={this.handleChangeEditName}
+                />
+                <ControlLabel>Ingredients</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.editRecipe.ingredients}
+                  placeholder="Recipe Name"
+                  onChange={this.handleChangeEditIngredients}
+                />
+              </FormGroup>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <button onClick={this.editRecipe}>Edit Recipe</button>
+            <button onClick={this.closeEditModal}>Close</button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     );
   }

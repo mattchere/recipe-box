@@ -26,6 +26,7 @@ class Recipe extends Component {
           ingredients={this.props.ingredients} 
           title={this.props.title}
           deleteRecipe={this.props.deleteRecipe}
+          editModal={this.props.editModal}
         />
       </div>
     );

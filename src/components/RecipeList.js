@@ -14,7 +14,8 @@ class RecipeList extends Component {
                   ingredients={rec.ingredients} 
                   hidden={rec.hidden} 
                   hide={this.props.hide}
-                  deleteRecipe={this.props.deleteRecipe} />
+                  deleteRecipe={this.props.deleteRecipe}
+                  editModal={this.props.editModal} />
               </li>)
           })}
         </ul>

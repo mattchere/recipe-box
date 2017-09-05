@@ -4,11 +4,16 @@ import '../App.css';
 class IngredientList extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickDelete = this.handleClickDelete.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
-  handleClick(e) {
+  handleClickDelete(e) {
     this.props.deleteRecipe(this.props.title);
+  }
+
+  handleClickEdit(e) {
+    this.props.editModal(this.props.title);
   }
 
   render() {
@@ -21,8 +26,8 @@ class IngredientList extends Component {
             return <li key={i}>{ing}</li>
           })}
         </ul>
-        <button onClick={this.handleClick}>Delete</button>
-        <button>Edit</button>
+        <button onClick={this.handleClickDelete}>Delete</button>
+        <button onClick={this.handleClickEdit}>Edit</button>
       </div>
     );
   }
