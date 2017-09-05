@@ -129,7 +129,7 @@ class App extends Component {
     const recipe = {
       title: this.state.editRecipe.name,
       ingredients: this.state.editRecipe.ingredients.split(','),
-      hidden: true
+      hidden: false
     }
     const newRecipes = this.state.recipes.map(rec =>
     rec.title === this.state.editRecipe.originalTitle ? recipe: rec);
