@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 class IngredientList extends Component {
   constructor(props) {
@@ -26,8 +27,10 @@ class IngredientList extends Component {
             return <li key={i}>{ing}</li>
           })}
         </ul>
-        <button onClick={this.handleClickDelete}>Delete</button>
-        <button onClick={this.handleClickEdit}>Edit</button>
+        <ButtonToolbar>
+          <Button bsStyle="danger" onClick={this.handleClickDelete}>Delete</Button>
+          <Button bsStyle="warning" onClick={this.handleClickEdit}>Edit</Button>
+        </ButtonToolbar>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import './App.css';
 import RecipeList from './components/RecipeList';
 import {Modal} from 'react-bootstrap';
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
@@ -189,7 +190,7 @@ class App extends Component {
           deleteRecipe={this.deleteRecipe}
           editModal={this.editModal}
         />
-        <button onClick={this.openAddModal}>Add Recipe</button>
+        <Button bsStyle="primary" onClick={this.openAddModal}>Add Recipe</Button>
 
         <Modal show={this.state.showAddModal} onHide={this.closeAddModal}>
           <Modal.Header closeButton>
@@ -205,19 +206,21 @@ class App extends Component {
                   placeholder="Recipe Name"
                   onChange={this.handleChangeName}
                 />
-                <ControlLabel>Recipe</ControlLabel>
+                <ControlLabel>Ingredients</ControlLabel>
                 <FormControl
                   type="text"
                   value={this.state.newRecipe.ingredients}
-                  placeholder="Recipe Name"
+                  placeholder="Enter Ingredients,Separated,By,Commas"
                   onChange={this.handleChangeIngredients}
                 />
               </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <button onClick={this.addRecipe}>Add Recipe</button>
-            <button onClick={this.closeAddModal}>Close</button>
+            <ButtonToolbar>
+              <Button bsStyle="success" onClick={this.addRecipe}>Add Recipe</Button>
+              <Button bsStyle="danger" onClick={this.closeAddModal}>Close</Button>
+            </ButtonToolbar>
           </Modal.Footer>
         </Modal>
 
@@ -239,15 +242,17 @@ class App extends Component {
                 <FormControl
                   type="text"
                   value={this.state.editRecipe.ingredients}
-                  placeholder="Recipe Name"
+                  placeholder="Enter Ingredients,Separated,By,Commas"
                   onChange={this.handleChangeEditIngredients}
                 />
               </FormGroup>
             </form>
           </Modal.Body>
           <Modal.Footer>
-            <button onClick={this.editRecipe}>Edit Recipe</button>
-            <button onClick={this.closeEditModal}>Close</button>
+            <ButtonToolbar>
+              <Button bsStyle="success" onClick={this.editRecipe}>Edit Recipe</Button>
+              <Button bsStyle="danger" onClick={this.closeEditModal}>Close</Button>
+            </ButtonToolbar>
           </Modal.Footer>
         </Modal>
 

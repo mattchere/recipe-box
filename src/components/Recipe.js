@@ -18,7 +18,7 @@ class Recipe extends Component {
       <div>
         <a className="recipe-link" onClick={this.handleClick}>
           <div className="recipe-name">
-            <h1>{this.props.title}</h1>
+            <p>{this.props.title}</p>
           </div>
         </a>
         <IngredientList 
