@@ -180,6 +180,19 @@ class App extends Component {
       }
     });
   }
+  componentWillMount() {
+    if (localStorage.getItem('state') === null) {
+      localStorage.setItem('state', JSON.stringify(this.state));
+    }
+    else {
+      const store = localStorage.getItem('state');
+      this.setState(JSON.parse(store));
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('state', JSON.stringify(nextState));
+  }
 
   render() {
     return (
